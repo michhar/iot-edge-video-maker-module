@@ -1,0 +1,43 @@
+######################################################################################### 
+# First do:
+# docker build -f azure-iot-sdk-python/Dockerfile -t wonderwoman/azure-iot-sdk-python .
+#
+# Then do:
+# docker build -f Dockerfile.sim -t <user or server name>/ .
+######################################################################################### 
+
+FROM wonderwoman/azure-iot-sdk-python:latest as azure-iot-sdk-python
+
+# Was planning to use alpine as the runtime from image, but
+# some required packages were missing from the default
+# repository so keeping it simple and going with ubuntu for now.
+
+FROM ubuntu:16.04
+
+WORKDIR /app
+
+COPY --from=azure-iot-sdk-python /azure-iot-sdk-python/device/samples/iothub_client.so .
+
+RUN apt-get update && \
+    apt-get install -y --no-install-recommends \
+    libcurl4-openssl-dev python3-pip \
+    libboost-python1.58-dev libpython3-dev
+
+RUN apt-get update && \
+    apt-get install -y --no-install-recommends \
+    libffi-dev libssl-dev \
+    libxml2-dev libxslt1-dev \
+    libjpeg8-dev zlib1g-dev && \
+    rm -rf /var/lib/apt/lists/* 
+
+COPY requirements.txt ./
+RUN pip3 install -r requirements.txt
+
+COPY *.py ./
+
+COPY data/ ./data/
+
+RUN useradd -ms /bin/bash moduleuser
+USER moduleuser
+
+CMD ["python3", "-u", "module.py"]
