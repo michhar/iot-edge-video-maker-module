@@ -15,11 +15,10 @@ Clone this repository.
 
 Create a file, `.env`, at the base of this repo (note the `.`).  Place the following environment variables in it, using the proper container registry information, as in:
 
-```text
+```bash
 CONTAINER_REGISTRY_USERNAME=<azure container registry user name>
 CONTAINER_REGISTRY_PASSWORD=<azure container registry password>
 CONTAINER_REGISTRY_ADDRESS=<azure container registry address
->
 ```
 
 Open an integrated terminal window with VSCode (View -> Terminal).  Login in to Azure and add the container registry credentials.
@@ -39,11 +38,10 @@ The first step is building a dependency, `azure-iot-sdk-python`.  Then, the depl
     `docker build -f azure-iot-sdk-python/Dockerfile -t wonderwoman/azure-iot-sdk-python .`
 
 2.  Right click on the `deployment.template.json` in the base of the repository, and click "Build and Push IoT Edge Solution" (this should show up if the IoT Edge extension for VSCode has been installed).
-3.  Right click on the same file and "Generate IoT Edge Deployment Manifest".  This should create a `config` folder with a file `deployment.json` inside of it.
 
 ## Deploy Solution
 
-The above step will generate a `config` folder.  Right click on the `deployment.json` and select "Create Deployment for Single Device", then the device (if there is no device, create one in the IoT Hub).  The "localhost:5000" in the custom Module may need to be replaced with the cloud container registry name.
+The above step will generate a `config` folder.  Right click on the `deployment.json` and select "Create Deployment for Single Device", then the device (if there is no device, create one in the IoT Hub).  **Note**:  The "localhost:5000" in the custom Module may need to be replaced with the cloud container registry name.
 
 ## Test Image Locally
 

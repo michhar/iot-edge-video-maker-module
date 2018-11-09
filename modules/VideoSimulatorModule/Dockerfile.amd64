@@ -1,22 +1,12 @@
 ######################################################################################### 
-# First do:
-# docker build -f azure-iot-sdk-python/Dockerfile -t wonderwoman/azure-iot-sdk-python .
-#
-# Then do:
-# docker build -f Dockerfile.sim -t <user or server name>/ .
+# Dockerfile for first stab at a video stream simulator as an Azure IoT Edge module
 ######################################################################################### 
 
-FROM wonderwoman/azure-iot-sdk-python:latest as azure-iot-sdk-python
-
-# Was planning to use alpine as the runtime from image, but
-# some required packages were missing from the default
-# repository so keeping it simple and going with ubuntu for now.
+# Ubuntu as base for some required packages
 
 FROM ubuntu:16.04
 
 WORKDIR /app
-
-COPY --from=azure-iot-sdk-python /azure-iot-sdk-python/device/samples/iothub_client.so .
 
 RUN apt-get update && \
     apt-get install -y --no-install-recommends \
