@@ -18,7 +18,7 @@ Create a file, `.env`, at the base of this repo (note the `.`).  Place the follo
 ```bash
 CONTAINER_REGISTRY_USERNAME=<azure container registry user name>
 CONTAINER_REGISTRY_PASSWORD=<azure container registry password>
-CONTAINER_REGISTRY_ADDRESS=<azure container registry address
+CONTAINER_REGISTRY_ADDRESS=<azure container registry address>
 ```
 
 Open an integrated terminal window with VSCode (View -> Terminal).  Login in to Azure and add the container registry credentials.
@@ -31,13 +31,9 @@ Note:  Dockerhub may also be used.
 
 ## Build and Push Image
 
-The first step is building a dependency, `azure-iot-sdk-python`.  Then, the deployment template will be used to build an image for the module and push it to the registry specified in the `.env` file.  Finally, a deployment manifest will be created.
+The deployment template will be used to build an image for the module and push it to the registry specified in the `.env` file.  Then, a deployment manifest will be created and used in deployment to an edge device.
 
-1. CD into the `azure-iot-sdk-python` folder and run:
-    
-    `docker build -f azure-iot-sdk-python/Dockerfile -t wonderwoman/azure-iot-sdk-python .`
-
-2.  Right click on the `deployment.template.json` in the base of the repository, and click "Build and Push IoT Edge Solution" (this should show up if the IoT Edge extension for VSCode has been installed).
+Right click on the `deployment.template.json` in the base of the repository, and click "Build and Push IoT Edge Solution" (this should show up if the IoT Edge extension for VSCode has been installed).
 
 ## Deploy Solution
 
@@ -47,7 +43,7 @@ The above step will generate a `config` folder.  Right click on the `deployment.
 
 In the integrated terminal in VSCode or elsewhere, start the container (you may need elevated priveledges as in `sudo` or use an admin terminal instead):
 
-`docker run wonderwoman/edge-image-simulator-module`
+`docker run <azure container registry address>/videosimulator:0.0.1-amd64`
 
 And, then, enter into running container with a bash interface:
 
