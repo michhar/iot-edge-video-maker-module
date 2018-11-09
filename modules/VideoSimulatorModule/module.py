@@ -19,6 +19,7 @@ else:
 
 img_arry = []
 img_files = glob.glob(os.path.join(os.getcwd(), 'data', '*.jpg'))
+num_imgs = len(img_files)
 for imgf in img_files:
     with open(imgf, 'rb') as fh:
         encoded_str = str(base64.b64encode(fh.read()))
@@ -26,7 +27,7 @@ for imgf in img_files:
 
 while True:
     # Choose one image at random
-    encoded_str = img_arry[np.random.randint(low=0, high=2)]
+    encoded_str = img_arry[np.random.randint(low=0, high=num_imgs)]
 
     # The json that will become the payload
     result = {'image_data': encoded_str}
