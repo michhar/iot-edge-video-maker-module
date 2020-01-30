@@ -1,4 +1,16 @@
-# based on https://github.com/vjrantal/iot-edge-darknet-module/blob/master/module.py
+"""
+based on https://github.com/vjrantal/iot-edge-darknet-module/blob/master/module.py
+
+Example of decoding the base 64-encoded output image stream:
+    # Load json payload
+    input_data = json.loads(input_data)['image_data']
+    # Remove unnecessary characters (extra quotes etc.)
+    input_data = ''.join(list(input_data)[2:-1])
+    # Convert image from base64 string to int
+    input_data = base64.b64decode(bytes(input_data, 'utf-8'))
+"""
+
+
 import os
 import numpy as np
 import json
@@ -22,7 +34,7 @@ img_files = glob.glob(os.path.join(os.getcwd(), 'data', '*.jpg'))
 num_imgs = len(img_files)
 for imgf in img_files:
     with open(imgf, 'rb') as fh:
-        encoded_str = str(base64.b64encode(fh.read()))
+        encoded_str = base64.b64encode(fh.read())
         img_arry.append(encoded_str)
 
 while True:

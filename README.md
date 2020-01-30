@@ -70,3 +70,7 @@ To restart IoT Edge security daemon:
 ## For Reference
 
 Set up a new project by following instructions here:  https://github.com/Azure/cookiecutter-azure-iot-edge-module
+
+## Credit
+
+Test data source:  http://groups.inf.ed.ac.uk/vision/CAVIAR/CAVIARDATA1/
